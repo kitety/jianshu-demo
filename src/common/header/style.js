@@ -54,6 +54,12 @@ export const SearchWrapper = styled.div`
     border-radius: 15px;
     /* background: red; */
     text-align: center;
+    cursor: pointer;
+    transition: background 0.4s ease;
+    &.focus {
+      background: #777;
+      transition: background 0.4s ease;
+    }
   }
 `;
 export const NavSearch = styled.input.attrs({
@@ -65,13 +71,19 @@ export const NavSearch = styled.input.attrs({
   outline: none;
   border-radius: 19px;
   margin-top: 9px;
-  padding: 0 20px;
+  padding: 0 32px 0 20px;
   box-sizing: border-box;
   background: #eee;
   font-size: 14px;
   margin-left: 20px;
+  transition: width 0.4s ease;
   &::placeholder {
     color: #999;
+  }
+  &.focus {
+    width: 320px;
+    color: red;
+    transition: width 0.4s ease;
   }
 `;
 export const Addition = styled.div`

@@ -9,8 +9,26 @@ import {
   Button,
   SearchWrapper
 } from "./style";
+import { connect } from "react-redux";
 
-export default class Header extends Component {
+class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      focus: false
+    };
+  }
+  handleInputFocus = () => {
+    this.setState({
+      focus: true
+    });
+  };
+  handleInputBlur = () => {
+    this.setState({
+      focus: false
+    });
+  };
+
   render() {
     return (
       <HeaderWrapper>
@@ -22,15 +40,21 @@ export default class Header extends Component {
           </NavItem>
           <NavItem className="left">
             <span className="iconfont">&#xe6ef;</span>
-            <sapn>下载</sapn>
+            <span>下载</span>
           </NavItem>
           <NavItem className="right">登录</NavItem>
           <NavItem className="right">
             <span className="iconfont">&#xe636;</span>
           </NavItem>
           <SearchWrapper>
-            <NavSearch />
-            <span className="iconfont">&#xe614;</span>
+            <NavSearch
+              className={this.state.focus ? "focus" : ""}
+              onFocus={this.handleInputFocus}
+              onBlur={this.handleInputBlur}
+            />
+            <span className={this.state.focus ? "focus iconfont" : " iconfont"}>
+              &#xe614;
+            </span>
           </SearchWrapper>
         </Nav>
         <Addition>
@@ -44,3 +68,15 @@ export default class Header extends Component {
     );
   }
 }
+const mapStateToProps = (state, ownProps) => {
+  return {
+    prop: state.prop
+  };
+};
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {};
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);
