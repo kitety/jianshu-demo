@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {GlobalStyle} from './style';
-import Header from './common/header/Header'
+import Header from './common/header'
+import { GlobalStyle } from "./statics/iconfont/iconfont";
 
 class App extends Component {
   render() {
