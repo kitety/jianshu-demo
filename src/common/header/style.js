@@ -57,7 +57,7 @@ export const SearchWrapper = styled.div`
     cursor: pointer;
     transition: background 0.4s ease;
     &.focus {
-      background: #777;
+      background: #969696;
       transition: background 0.4s ease;
     }
   }
@@ -82,7 +82,6 @@ export const NavSearch = styled.input.attrs({
   }
   &.focus {
     width: 320px;
-    color: red;
     transition: width 0.4s ease;
   }
 `;

@@ -10,14 +10,9 @@ import {
   SearchWrapper
 } from "./style";
 import { connect } from "react-redux";
+import { actionCreators } from "./store";
 
 class Header extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      focus: false
-    };
-  }
   handleInputFocus = () => {
     this.setState({
       focus: true
@@ -48,11 +43,11 @@ class Header extends Component {
           </NavItem>
           <SearchWrapper>
             <NavSearch
-              className={this.state.focus ? "focus" : ""}
-              onFocus={this.handleInputFocus}
-              onBlur={this.handleInputBlur}
+              className={this.props.focus ? "focus" : ""}
+              onFocus={this.props.handleInputFocus}
+              onBlur={this.props.handleInputBlur}
             />
-            <span className={this.state.focus ? "focus iconfont" : " iconfont"}>
+            <span className={this.props.focus ? "focus iconfont" : " iconfont"}>
               &#xe614;
             </span>
           </SearchWrapper>
@@ -70,11 +65,18 @@ class Header extends Component {
 }
 const mapStateToProps = (state, ownProps) => {
   return {
-    prop: state.prop
+    focus: state.headerReducer.focus
   };
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
-  return {};
+  return {
+    handleInputFocus() {
+      dispatch(actionCreators.searchFocus());
+    },
+    handleInputBlur() {
+      dispatch(actionCreators.searchBlur());
+    }
+  };
 };
 export default connect(
   mapStateToProps,
