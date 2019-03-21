@@ -65,7 +65,9 @@ class Header extends Component {
 }
 const mapStateToProps = (state, ownProps) => {
   return {
-    focus: state.headerReducer.focus
+    // 等价的
+    // focus: state.get("headerReducer").get("focus")
+    focus: state.getIn(["headerReducer", "focus"])
   };
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
