@@ -6,6 +6,9 @@ import {
   NavItem,
   NavSearch,
   Addition,
+  SearchInfo,
+  SearchInfoItem,
+  SearchInfoTitle,
   Button,
   SearchWrapper
 } from "./style";
@@ -50,6 +53,20 @@ class Header extends Component {
             <span className={this.props.focus ? "focus iconfont" : " iconfont"}>
               &#xe614;
             </span>
+            {// 列表
+            this.props.focus && (
+              <SearchInfo>
+                <SearchInfoTitle>
+                  <div>热门搜索</div>
+                  <a>换一批</a>
+                </SearchInfoTitle>
+                <div>
+                  {this.props.list.map(item => {
+                    return <SearchInfoItem key={item}>{item}</SearchInfoItem>;
+                  })}
+                </div>
+              </SearchInfo>
+            )}
           </SearchWrapper>
         </Nav>
         <Addition>
@@ -67,12 +84,14 @@ const mapStateToProps = (state, ownProps) => {
   return {
     // 等价的
     // focus: state.get("headerReducer").get("focus")
-    focus: state.getIn(["headerReducer", "focus"])
+    focus: state.getIn(["headerReducer", "focus"]),
+    list: state.getIn(["headerReducer", "list"])
   };
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     handleInputFocus() {
+      dispatch(actionCreators.getList());
       dispatch(actionCreators.searchFocus());
     },
     handleInputBlur() {
