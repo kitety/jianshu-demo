@@ -16,18 +16,26 @@ import { connect } from "react-redux";
 import { actionCreators } from "./store";
 
 class Header extends Component {
-  handleInputFocus = () => {
-    this.setState({
-      focus: true
-    });
-  };
-  handleInputBlur = () => {
-    this.setState({
-      focus: false
-    });
-  };
-
   render() {
+    const {
+      focus,
+      handleInputFocus,
+      handleInputBlur,
+      list,
+      page,
+      totalPage,
+      handleChangePage,
+      handleInfoMouseEnter,
+      handleInfoMouseLeave,
+      mouseIn
+    } = this.props;
+    const jsList = list.toJS();
+    const searchItemList = [];
+    if (jsList.length > 0) {
+      for (let i = (page - 1) * 10; i < 10 * page; i++) {
+        searchItemList.push(jsList[i]);
+      }
+    }
     return (
       <HeaderWrapper>
         <Logo />
@@ -46,22 +54,42 @@ class Header extends Component {
           </NavItem>
           <SearchWrapper>
             <NavSearch
-              className={this.props.focus ? "focus" : ""}
-              onFocus={this.props.handleInputFocus}
-              onBlur={this.props.handleInputBlur}
+              className={focus ? "focus" : ""}
+              onFocus={handleInputFocus.bind(this, list)}
+              onBlur={handleInputBlur}
             />
-            <span className={this.props.focus ? "focus iconfont" : " iconfont"}>
+            <span className={focus ? "focus iconfont zoom" : " iconfont zoom"}>
               &#xe614;
             </span>
             {// 列表
-            this.props.focus && (
-              <SearchInfo>
+            (focus || mouseIn) && (
+              <SearchInfo
+                onMouseEnter={handleInfoMouseEnter}
+                onMouseLeave={handleInfoMouseLeave}
+              >
                 <SearchInfoTitle>
                   <div>热门搜索</div>
-                  <a>换一批</a>
+                  <a
+                    onClick={handleChangePage.bind(
+                      this,
+                      page,
+                      totalPage,
+                      this.spin
+                    )}
+                  >
+                    换一批
+                  </a>
+                  <span
+                    className="iconfont spin"
+                    ref={spin => {
+                      this.spin = spin;
+                    }}
+                  >
+                    &#xe851;
+                  </span>
                 </SearchInfoTitle>
                 <div>
-                  {this.props.list.map(item => {
+                  {searchItemList.map(item => {
                     return <SearchInfoItem key={item}>{item}</SearchInfoItem>;
                   })}
                 </div>
@@ -85,17 +113,37 @@ const mapStateToProps = (state, ownProps) => {
     // 等价的
     // focus: state.get("headerReducer").get("focus")
     focus: state.getIn(["headerReducer", "focus"]),
-    list: state.getIn(["headerReducer", "list"])
+    page: state.getIn(["headerReducer", "page"]),
+    totalPage: state.getIn(["headerReducer", "totalPage"]),
+    list: state.getIn(["headerReducer", "list"]),
+    mouseIn: state.getIn(["headerReducer", "mouseIn"])
   };
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    handleInputFocus() {
-      dispatch(actionCreators.getList());
+    handleInputFocus(list) {
+      if (list.size === 0) {
+        dispatch(actionCreators.getList());
+      }
       dispatch(actionCreators.searchFocus());
     },
     handleInputBlur() {
       dispatch(actionCreators.searchBlur());
+    },
+    handleInfoMouseEnter() {
+      dispatch(actionCreators.infoMouseEnter());
+    },
+    handleInfoMouseLeave() {
+      dispatch(actionCreators.infoMouseleave());
+    },
+    handleChangePage(page, totalPage, spin) {
+      const originAngle = Number(spin.style.transform.replace(/[^0-9]/gi, ""));
+      let nextPage = page + 1;
+      if (nextPage + 1 > totalPage) {
+        nextPage = 1;
+      }
+      spin.style.transform = `rotate(${originAngle + 360}deg)`;
+      dispatch(actionCreators.changePage(nextPage));
     }
   };
 };

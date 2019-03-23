@@ -45,7 +45,7 @@ export const SearchWrapper = styled.div`
   float: left;
   /* background: red; */
   position: relative;
-  span {
+  span.zoom {
     position: absolute;
     right: 5px;
     bottom: 5px;
@@ -89,6 +89,20 @@ export const SearchInfoTitle = styled.div`
     border-width: 0;
     padding: 0;
     cursor: pointer;
+    &:hover {
+      color: #2f2f2f;
+    }
+  }
+  .spin {
+    float: right;
+    color: #969696;
+    font-size: 12px;
+    display: block;
+    margin-top: 2px;
+    margin-right: 2px;
+    transition: all 0.2s ease-in;
+    transform: rotate(0deg);
+    transform-origin: center center;
   }
 `;
 export const SearchInfoItem = styled.a`
