@@ -26,21 +26,25 @@ export const Nav = styled.div`
   box-sizing: border-box;
 `;
 export const NavItem = styled.div`
-  line-height: 56px;
-  padding: 0 15px;
-  font-size: 17px;
-  color: #333;
-  &.left {
-    float: left;
-  }
-  &.right {
-    color: #969696;
-    float: right;
-  }
-  &.active {
-    color: #ea6f5a;
-  }
-`;
+         line-height: 56px;
+         padding: 0 15px;
+         font-size: 17px;
+         color: #333;
+         &.left {
+           float: left;
+         }
+         &.right {
+           color: #969696;
+           float: right;
+         }
+         &.active {
+           color: #ea6f5a;
+         }
+         span.iconfont {
+           font-size: 20px;
+           line-height: 26px;
+         }
+       `;
 export const SearchWrapper = styled.div`
   float: left;
   /* background: red; */
