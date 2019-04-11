@@ -26,7 +26,8 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 body {
-	line-height: 1;
+  line-height: 1;
+  font-family: -apple-system,SF UI Display,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
 }
 ol, ul {
 	list-style: none;
@@ -43,4 +44,5 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
 `;

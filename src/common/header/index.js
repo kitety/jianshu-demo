@@ -123,6 +123,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     handleInputFocus(list) {
       if (list.size === 0) {
+        console.log(actionCreators.getList())
         dispatch(actionCreators.getList());
       }
       dispatch(actionCreators.searchFocus());

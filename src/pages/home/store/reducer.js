@@ -1,33 +1,23 @@
 import { fromJS } from "immutable";
+import { CHANGE_HOME_DATA, GET_MORE_LIST} from "./constants";
 
 const nameInitialState = fromJS({
-  listItem: [
-    {
-      id: 1,
-      title: "国内文章",
-      imgUrl:
-        "https://upload.jianshu.io/users/upload_avatars/2631077/dc99c361412c?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp"
-    },
-    {
-      id: 2,
-      title: "国内文章",
-      imgUrl:
-        "https://upload.jianshu.io/users/upload_avatars/2631077/dc99c361412c?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp"
-    },
-    {
-      id: 3,
-      title: "国内文章",
-      imgUrl:
-        "https://upload.jianshu.io/users/upload_avatars/2631077/dc99c361412c?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp"
-    },
-    {
-      id: 4,
-      title: "国内文章",
-      imgUrl:
-        "https://upload.jianshu.io/users/upload_avatars/2631077/dc99c361412c?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp"
-    }
-  ]
+  listItem: [],
+  recommandList: [],
+  articleList: []
 });
 export default (state = nameInitialState, action) => {
+  switch (action.type) {
+    case CHANGE_HOME_DATA:
+      return state.merge({
+        articleList: fromJS(action.data.articleList),
+        listItem: fromJS(action.data.listItem),
+        recommandList: fromJS(action.data.recommandList)
+      });
+    case GET_MORE_LIST:
+    break;
+    default:
+      break;
+  }
   return state
 };
