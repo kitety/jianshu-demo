@@ -6,6 +6,19 @@ export const HomeWrapper = styled.div`
   /* 触发bfc */
   overflow: hidden;
 `;
+//回到顶部
+export const BackToTop = styled.div`
+  position:fixed;
+  width:73px;
+  height:60px;
+  line-height:60px;
+  text-align:center;
+  border:1px solid #dcdcdc;
+  right:0;
+  bottom:62px;
+  background:#ccc;
+  cursor: pointer;
+`;
 export const HomeLeft = styled.div`
   padding-top: 30px;
   width: 625px;

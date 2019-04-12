@@ -1,15 +1,25 @@
-import React, { Component } from "react";
-import { HomeWrapper, HomeLeft, HomeRight } from "./style";
+import React, { Component,PureComponent } from "react";
+import { HomeWrapper, HomeLeft, HomeRight, BackToTop } from "./style";
 import Topic from "./components/Topic";
 import List from "./components/List";
 import Writer from "./components/Writer";
 import Recommend from "./components/Recommend";
 import axios from 'axios';
 import { connect } from 'react-redux'
-import { constants, actionCreators} from "./store";
+import { constants, actionCreators } from "./store";
 
-class Home extends Component {
+class Home extends PureComponent {
+  handleScrollToTop = () => {
+    window.scrollTo(0, 0)
+  }
+  bindEvents = () => {
+    window.addEventListener('scroll', this.props.changeScrollTopShow)
+  }
+  unbindEvents = () => {
+    window.addEventListener('scroll', null)
+  }
   render () {
+    const { showScroll } = this.props
     return (
       <HomeWrapper>
         <HomeLeft>
@@ -25,10 +35,15 @@ class Home extends Component {
           <Recommend />
           <Writer />
         </HomeRight>
-      </HomeWrapper >
+        {
+          showScroll && <BackToTop onClick={this.handleScrollToTop}>回到顶部</BackToTop>
+        }
+      </HomeWrapper>
     );
   }
+
   componentDidMount () {
+    this.bindEvents()
     this.props.changeHomeData()
     // axios.get('/api/home.json').then((result) => {
     //   this.props.changeHomeData(result.data.data)
@@ -36,7 +51,15 @@ class Home extends Component {
     //   console.log(err)
     // });
   }
+  componentWillUnmount () {
+    this.unbindEvents()
+  }
 };
+const mapStateToProps = (state, ownProps) => {
+  return {
+    showScroll: state.getIn(['homeReducer', 'showScroll'])
+  }
+}
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     changeHomeData: () => {
@@ -46,7 +69,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       // }
       dispatch(actionCreators.getHomeInfo())
       // dispatch(HomeTempAction)
+    },
+    changeScrollTopShow: (e) => {
+      dispatch(actionCreators.toggleTopShow(document.documentElement.scrollTop > 0))
     }
   }
 }
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

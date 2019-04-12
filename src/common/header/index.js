@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component ,PureComponent} from "react";
 import {
   HeaderWrapper,
   Logo,
@@ -15,7 +15,7 @@ import {
 import { connect } from "react-redux";
 import { actionCreators } from "./store";
 
-class Header extends Component {
+class Header extends PureComponent {
   render() {
     const {
       focus,
