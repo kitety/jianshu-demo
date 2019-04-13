@@ -93,6 +93,8 @@ export const RecommandItem = styled.div`
   height:50px;
   background:url(${props => props.imageUrl});
   background-size:contain;
+  cursor:pointer;
+  margin-bottom:6px;
 `
 export const Loadmore = styled.div`
     border-radius: 20px;
@@ -109,4 +111,34 @@ export const Loadmore = styled.div`
     display: block;
     text-align:center;
     cursor: pointer;
+`
+export const DownloadWrapper = styled.div`
+  margin:30px 0;
+  width:230px;
+  height:60px;
+  padding:10px 22px;
+  border:1px solid #dcdcdc;
+  border-radius:2px;
+  display:flex;
+  .img{
+    display: inline-block;
+    width:60px;
+    height:60px;
+    img{
+      width:100%;
+
+    }
+  }
+  .info{
+    height:60px;
+    display: inline-block;
+    padding-left: 8px;
+    padding-top: 16px;
+    font-size: 14px;
+    .description{
+     margin-top: 4px;
+    font-size: 13px;
+    color: #999;
+    }
+  }
 `

@@ -1,8 +1,8 @@
-import React, { Component,PureComponent } from "react";
+import React, { Component, PureComponent } from "react";
 import { HomeWrapper, HomeLeft, HomeRight, BackToTop } from "./style";
 import Topic from "./components/Topic";
 import List from "./components/List";
-import Writer from "./components/Writer";
+import Download from "./components/Download";
 import Recommend from "./components/Recommend";
 import axios from 'axios';
 import { connect } from 'react-redux'
@@ -24,7 +24,7 @@ class Home extends PureComponent {
       <HomeWrapper>
         <HomeLeft>
           <img
-            src="https://upload.jianshu.io/admin_banners/web_images/4620/8ce28ed4656eaa9d606d92c60ba6a04e419cf39b.png?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
+            src="https://i.loli.net/2019/04/13/5cb199ad962f0.png"
             className="banner-img"
             alt="banner"
           />
@@ -33,7 +33,7 @@ class Home extends PureComponent {
         </HomeLeft>
         <HomeRight>
           <Recommend />
-          <Writer />
+          <Download />
         </HomeRight>
         {
           showScroll && <BackToTop onClick={this.handleScrollToTop}>回到顶部</BackToTop>
