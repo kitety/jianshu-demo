@@ -1,4 +1,4 @@
-import React, { Component ,PureComponent} from "react";
+import React, { Component, PureComponent } from "react";
 import {
   HeaderWrapper,
   Logo,
@@ -14,11 +14,12 @@ import {
 } from "./style";
 import { connect } from "react-redux";
 import { actionCreators } from "./store";
+import {actionCreators as loginActionCreators } from "../../pages/login/store"
 import { Link } from 'react-router-dom'
 
 
 class Header extends PureComponent {
-  render() {
+  render () {
     const {
       focus,
       handleInputFocus,
@@ -29,7 +30,8 @@ class Header extends PureComponent {
       handleChangePage,
       handleInfoMouseEnter,
       handleInfoMouseLeave,
-      mouseIn
+      mouseIn,
+      login,logOut
     } = this.props;
     const jsList = list.toJS();
     const searchItemList = [];
@@ -41,7 +43,7 @@ class Header extends PureComponent {
     return (
       <HeaderWrapper>
         <Link to='/'>
-        <Logo />
+          <Logo />
         </Link>
         <Nav>
           <NavItem className="left active">
@@ -52,7 +54,9 @@ class Header extends PureComponent {
             <span className="iconfont">&#xe6ef;</span>
             <span>下载</span>
           </NavItem>
-          <NavItem className="right">登录</NavItem>
+          {
+            login ? <NavItem onClick={logOut} className="right">退出</NavItem> : <Link to="login"> <NavItem className="right">登录</NavItem></Link>
+          }
           <NavItem className="right">
             <span className="iconfont">&#xe636;</span>
           </NavItem>
@@ -66,39 +70,39 @@ class Header extends PureComponent {
               &#xe614;
             </span>
             {// 列表
-            (focus || mouseIn) && (
-              <SearchInfo
-                onMouseEnter={handleInfoMouseEnter}
-                onMouseLeave={handleInfoMouseLeave}
-              >
-                <SearchInfoTitle>
-                  <div>热门搜索</div>
-                  <a
-                    onClick={handleChangePage.bind(
-                      this,
-                      page,
-                      totalPage,
-                      this.spin
-                    )}
-                  >
-                    换一批
+              (focus || mouseIn) && (
+                <SearchInfo
+                  onMouseEnter={handleInfoMouseEnter}
+                  onMouseLeave={handleInfoMouseLeave}
+                >
+                  <SearchInfoTitle>
+                    <div>热门搜索</div>
+                    <a
+                      onClick={handleChangePage.bind(
+                        this,
+                        page,
+                        totalPage,
+                        this.spin
+                      )}
+                    >
+                      换一批
                   </a>
-                  <span
-                    className="iconfont spin"
-                    ref={spin => {
-                      this.spin = spin;
-                    }}
-                  >
-                    &#xe851;
+                    <span
+                      className="iconfont spin"
+                      ref={spin => {
+                        this.spin = spin;
+                      }}
+                    >
+                      &#xe851;
                   </span>
-                </SearchInfoTitle>
-                <div>
-                  {searchItemList.map(item => {
-                    return <SearchInfoItem key={item}>{item}</SearchInfoItem>;
-                  })}
-                </div>
-              </SearchInfo>
-            )}
+                  </SearchInfoTitle>
+                  <div>
+                    {searchItemList.map(item => {
+                      return <SearchInfoItem key={item}>{item}</SearchInfoItem>;
+                    })}
+                  </div>
+                </SearchInfo>
+              )}
           </SearchWrapper>
         </Nav>
         <Addition>
@@ -120,28 +124,29 @@ const mapStateToProps = (state, ownProps) => {
     page: state.getIn(["headerReducer", "page"]),
     totalPage: state.getIn(["headerReducer", "totalPage"]),
     list: state.getIn(["headerReducer", "list"]),
-    mouseIn: state.getIn(["headerReducer", "mouseIn"])
+    mouseIn: state.getIn(["headerReducer", "mouseIn"]),
+    login: state.getIn(["loginReducer", "login"])
   };
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    handleInputFocus(list) {
+    handleInputFocus (list) {
       if (list.size === 0) {
         console.log(actionCreators.getList())
         dispatch(actionCreators.getList());
       }
       dispatch(actionCreators.searchFocus());
     },
-    handleInputBlur() {
+    handleInputBlur () {
       dispatch(actionCreators.searchBlur());
     },
-    handleInfoMouseEnter() {
+    handleInfoMouseEnter () {
       dispatch(actionCreators.infoMouseEnter());
     },
-    handleInfoMouseLeave() {
+    handleInfoMouseLeave () {
       dispatch(actionCreators.infoMouseleave());
     },
-    handleChangePage(page, totalPage, spin) {
+    handleChangePage (page, totalPage, spin) {
       const originAngle = Number(spin.style.transform.replace(/[^0-9]/gi, ""));
       let nextPage = page + 1;
       if (nextPage + 1 > totalPage) {
@@ -149,6 +154,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       }
       spin.style.transform = `rotate(${originAngle + 360}deg)`;
       dispatch(actionCreators.changePage(nextPage));
+    },
+    logOut(){
+      dispatch(loginActionCreators.ChangeLogin(false))
     }
   };
 };

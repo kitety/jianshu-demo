@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { DatailsWrapper, Header, Content } from './style'
 import { connect } from 'react-redux';
 import { actionCreators } from "./store";
+import {withRouter} from 'react-router-dom'
 
-class Details extends Component {
+class Details extends PureComponent {
   render () {
     console.log(this.props.match.params.id)
     const { title, content } = this.props
@@ -35,4 +36,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Details)
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Details))

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import logoPic from "../../statics/logo.png";
 
 export const HeaderWrapper = styled.div`
+  z-index:1;
   height: 56px;
   border-bottom: 1px solid #f0f0f0;
   position: relative;
@@ -24,25 +25,26 @@ export const Nav = styled.div`
   box-sizing: border-box;
 `;
 export const NavItem = styled.div`
-         line-height: 56px;
-         padding: 0 15px;
-         font-size: 17px;
-         color: #333;
-         &.left {
-           float: left;
-         }
-         &.right {
-           color: #969696;
-           float: right;
-         }
-         &.active {
-           color: #ea6f5a;
-         }
-         span.iconfont {
-           font-size: 20px;
-           line-height: 26px;
-         }
-       `;
+  line-height: 56px;
+  padding: 0 15px;
+  font-size: 17px;
+  color: #333;
+  cursor:pointer;
+  &.left {
+    float: left;
+  }
+  &.right {
+    color: #969696;
+    float: right;
+  }
+  &.active {
+    color: #ea6f5a;
+  }
+  span.iconfont {
+    font-size: 20px;
+    line-height: 26px;
+  }
+`;
 export const SearchWrapper = styled.div`
   float: left;
   /* background: red; */
