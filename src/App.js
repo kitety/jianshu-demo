@@ -9,14 +9,14 @@ import Home from "./pages/home";
 import Details from "./pages/details";
 
 class App extends Component {
-  render() {
+  render () {
     return (
       <Provider store={store}>
         <BasicGlobalStyle />
         <GlobalStyle />
         <div className="App">
-          <Header />
           <BrowserRouter>
+            <Header />
             <Route path="/" component={Home} exact={true} />
             <Route path="/details" exact={true} component={Details} />
           </BrowserRouter>

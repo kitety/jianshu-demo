@@ -14,6 +14,8 @@ import {
 } from "./style";
 import { connect } from "react-redux";
 import { actionCreators } from "./store";
+import { Link } from 'react-router-dom'
+
 
 class Header extends PureComponent {
   render() {
@@ -38,7 +40,9 @@ class Header extends PureComponent {
     }
     return (
       <HeaderWrapper>
+        <Link to='/'>
         <Logo />
+        </Link>
         <Nav>
           <NavItem className="left active">
             <span className="iconfont">&#xe604;</span>
